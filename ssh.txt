@@ -1,0 +1,31 @@
+conf t
+username admin privilege 15 secret YourStrongPassword
+ip http secure-server
+restconf
+
+
+conf t
+hostname Routers
+ip domain-name example.com
+crypto key generate rsa modulus 2048
+ip ssh version 2
+exit
+line vty 0 4
+transport input ssh
+login local
+exit
+wr mem
+
+
+
+curl -u admin:Cisco1234 -X GET http://192.168.174.149/restconf/data/Cisco-IOS-XE-native:native/interface/GigabitEthernet=6
+
+curl -k -u admin:Cisco123 -X GET https://192.168.174.153/restconf/data/Cisco-IOS-XE-native:native/router
+
+curl -k -u admin:Cisco123 -X GET https://192.168.174.153/restconf/data/Cisco-IOS-XE-ospf:ospf
+
+curl -k -u admin:password -X GET https://<router-ip>/restconf/data/Cisco-IOS-XE-ospf:ospf
+
+curl -k -u admin:Cisco123 -X GET https://192.168.174.153/restconf/data/Cisco-IOS-XE-ospf-oper:ospf-oper-data
+
+curl -k -u admin:Cisco123 -X GET https://192.168.174.153/restconf/data/Cisco-IOS-XE-native:native/router/ospf
